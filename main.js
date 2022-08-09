@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 dotenv.config();
 //
@@ -20,7 +20,7 @@ mongoose.connect(
 );
 
 // middleware
-// const authUser = require("./middleware/auth");
+
 
 // geting the route
 const registerRoute = require("./route/register");
