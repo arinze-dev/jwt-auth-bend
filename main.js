@@ -6,10 +6,10 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 dotenv.config();
 //
+app.use(bodyParser.json());
+// parse application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
-app.use(bodyParser.json());
 
 mongoose.connect(
 	"mongodb://localhost/jwt-db",
@@ -19,17 +19,16 @@ mongoose.connect(
 	}
 );
 
-// middleware
-
-
 // geting the route
 const registerRoute = require("./route/register");
 const login = require("./route/login");
+const logout = require("./route/logout");
 const homeRoute = require("./route/home");
 
 app.use(express.json());
 app.use("/api", registerRoute);
 app.use("/api", login);
+app.use("/api", logout);
 app.use(homeRoute);
 
 app.listen(4000, () => {

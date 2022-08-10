@@ -1,37 +1,52 @@
 const Route = require("express").Router();
 const bcrypt = require("bcrypt");
-const { User } = require("../model/user");
+// const { User } = require("../model/user");
+const {User, validateRegister} = require("../model/user")
 
 Route.post("/register", async (req, res) => {
-	//  checking for the input length
-	if (
-		req.body.email.length < 10 ||
-		req.body.name.length < 5 ||
-		req.body.password.length < 8
-	)
-		return res.send("check the your input");
+	// console.log(req.body);
+  //  the data varable is equal user data 
+	const RegisterData = {
+		name: req.body.name, 
+		email: req.body.email,
+		password: req.body.password,
+	}
+
+	const { error, value} =  validateRegister(RegisterData)
+
+	// note this logs all the error because abortEarly is false in joi 
+
+	if (error) return error.details
+		
+  // return	console.log(RegisterData , error);
+
 
 	//  checking to no if the name already exist
-	const nameCheck = await User.findOne({ name: req.body.name }); //
-	if (nameCheck) return res.status(402).send("Name already Exist ⚡");
+	const nameCheck = await User.findOne({ name: RegisterData.name }); //
+	if (nameCheck) return res.status(400).send("Name already Exist ⚡");
 	//  checking to no if the email already exist
-	const emailCheck = await User.findOne({ email: req.body.email }); //
-	if (emailCheck) return res.status(402).send("Email already Exist ⚡");
-	//
 
+	const emailCheck = await User.findOne({ email: RegisterData.email }); //
+	if (emailCheck) return res.status(400).send("Email already Exist ⚡");
+	//
+ 
 	//  bcrypt
+	console.log(RegisterData.password);
 	const salt = await bcrypt.genSalt(10);
-	const passwordHash = await bcrypt.hash(req.body.password, salt);
+	 RegisterData.password = await bcrypt.hash(RegisterData.password, salt);
 
 	//
 
-	const user = new User({
-		name: req.body.name,
-		email: req.body.email,
-		password: passwordHash,
-	});
-	const Newuser = await user.save();
-	res.send("success registration ", Newuser);
+
+	const userMoudel = new User(RegisterData);
+	try {
+		const Newuser = await userMoudel.save();
+	console.log(Newuser);
+	   res.send("success registration ");
+		
+	} catch (error) {
+		res.status(400).send(error)
+	}
 });
 
 Route.get("/register", (req, res) => {
