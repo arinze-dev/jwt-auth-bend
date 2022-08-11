@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { User, validateRegister } = require("../model/user");
 
 Route.post("/register", async (req, res) => {
-	// console.log(req.body);
+	console.log(req.body);
 	//  the data varable is equal user data
 	const RegisterData = {
 		name: req.body.name,

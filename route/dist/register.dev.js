@@ -16,8 +16,8 @@ Route.post("/register", function _callee(req, res) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          // console.log(req.body);
-          //  the data varable is equal user data
+          console.log(req.body); //  the data varable is equal user data
+
           RegisterData = {
             name: req.body.name,
             email: req.body.email,
@@ -26,82 +26,82 @@ Route.post("/register", function _callee(req, res) {
           _validateRegister = validateRegister(RegisterData), error = _validateRegister.error, value = _validateRegister.value; // note this logs all the error because abortEarly is false in joi
 
           if (!error) {
-            _context.next = 4;
+            _context.next = 5;
             break;
           }
 
           return _context.abrupt("return", res.status(200).json(error.details));
 
-        case 4:
-          _context.next = 6;
+        case 5:
+          _context.next = 7;
           return regeneratorRuntime.awrap(User.findOne({
             name: RegisterData.name
           }));
 
-        case 6:
+        case 7:
           nameCheck = _context.sent;
 
           if (!nameCheck) {
-            _context.next = 9;
+            _context.next = 10;
             break;
           }
 
           return _context.abrupt("return", res.status(400).json("Name already Exist ⚡"));
 
-        case 9:
-          _context.next = 11;
+        case 10:
+          _context.next = 12;
           return regeneratorRuntime.awrap(User.findOne({
             email: RegisterData.email
           }));
 
-        case 11:
+        case 12:
           emailCheck = _context.sent;
 
           if (!emailCheck) {
-            _context.next = 14;
+            _context.next = 15;
             break;
           }
 
           return _context.abrupt("return", res.status(400).json("Email already Exist ⚡"));
 
-        case 14:
+        case 15:
           //
           //  bcrypt
           console.log(RegisterData.password);
-          _context.next = 17;
+          _context.next = 18;
           return regeneratorRuntime.awrap(bcrypt.genSalt(10));
 
-        case 17:
+        case 18:
           salt = _context.sent;
-          _context.next = 20;
+          _context.next = 21;
           return regeneratorRuntime.awrap(bcrypt.hash(RegisterData.password, salt));
 
-        case 20:
+        case 21:
           RegisterData.password = _context.sent;
           //
           userMoudel = new User(RegisterData);
-          _context.prev = 22;
-          _context.next = 25;
+          _context.prev = 23;
+          _context.next = 26;
           return regeneratorRuntime.awrap(userMoudel.save());
 
-        case 25:
+        case 26:
           Newuser = _context.sent;
           console.log(Newuser);
           res.json("success registration ");
-          _context.next = 33;
+          _context.next = 34;
           break;
 
-        case 30:
-          _context.prev = 30;
-          _context.t0 = _context["catch"](22);
+        case 31:
+          _context.prev = 31;
+          _context.t0 = _context["catch"](23);
           res.status(400).json(_context.t0);
 
-        case 33:
+        case 34:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[22, 30]]);
+  }, null, null, [[23, 31]]);
 }); // Route.get("/register", (req, res) => {
 // 	res.json("god");
 // });

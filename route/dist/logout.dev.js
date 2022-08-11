@@ -10,7 +10,8 @@ var _require = require("./login"),
 Route.get("/logout", function (req, res) {
   res.header("usertoken", "", {
     maxAge: 2
-  }).json("user loged out");
-  res.redirect("/login");
+  }).json("user loged out"); // res.redirect("/login");
+
+  res.end();
 });
 module.exports = Route;
