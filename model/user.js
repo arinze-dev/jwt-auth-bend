@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const joi = require("joi");
+const { string } = require("joi");
 
 const UserSchema = new mongoose.Schema({
 	name: {
@@ -10,20 +11,20 @@ const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		require: true,
-		min: 10,
+		min: 6,
 	},
 	password: {
 		type: String,
 		require: true,
-		min: 6,
+		min: 6
 	},
 });
 
 const validateRegister = function (data) {
 	const joischema = joi.object({
 		name: joi.string().min(4).trim().required(),
-		email: joi.string().required().min(6).email(),
-		password: joi.string().min(8).max(14).required(),
+		email: joi.string().min(6).required().email(),
+		password: joi.string().min(8).required(),
 	});
 
 	return joischema.validate(data, { abortEarly: false });
@@ -31,8 +32,8 @@ const validateRegister = function (data) {
 
 const validateLogin = function (data) {
 	const joischema = joi.object({
-		email: joi.string().required().email().min(8),
-		password: joi.string().min(8).max(14).required(),
+		email: joi.string().required().email().min(6),
+		password: joi.string().min(8).required(),
 	});
 
 	return joischema.validate(data, { abortEarly: false });

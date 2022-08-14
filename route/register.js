@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 // const { User } = require("../model/user");
 const { User, validateRegister } = require("../model/user");
 
-Route.post("/register", async (req, res) => {
-	console.log(req.body);
+Route.post("/register/", async (req, res) => {
+	// console.log(req.body);
 	//  the data varable is equal user data
 	const RegisterData = {
 		name: req.body.name,
@@ -12,11 +12,12 @@ Route.post("/register", async (req, res) => {
 		password: req.body.password,
 	};
 
-	const { error, value } = validateRegister(RegisterData);
+	const { error} = validateRegister(RegisterData);
 
 	// note this logs all the error because abortEarly is false in joi
 
-	if (error) return res.status(200).json(error.details);
+	if (error) return res.status(400).json(error.details)
+	
 
 	// return	console.log(RegisterData , error);
 
@@ -40,13 +41,13 @@ Route.post("/register", async (req, res) => {
 	try {
 		const Newuser = await userMoudel.save();
 		console.log(Newuser);
-		res.json("success registration ");
+		res.status(201).json("success registration");
 	} catch (error) {
 		res.status(400).json(error);
 	}
 });
 
-// Route.get("/register", (req, res) => {
-// 	res.json("god");
-// });
+Route.get("/register", (req, res) => {
+	res.json("god");
+});
 module.exports = Route;

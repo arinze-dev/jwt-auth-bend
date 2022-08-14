@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const { validateLogin } = require("../model/user");
 // const { route } = require("./register");
 
-Route.post("/login", async (req, res) => {
+Route.post("/login/", async (req, res) => {
 	//  the data varable is equal user log in data
 	const loginData = {
 		email: req.body.email,

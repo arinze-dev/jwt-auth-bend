@@ -26,12 +26,12 @@ const homeRoute = require("./route/home");
 const cors = require("cors");
 
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 app.use("/api", registerRoute);
 app.use("/api", login);
 app.use("/api", logout);
 app.use(homeRoute);
 
-app.listen(4000, () => {
+app.listen(4040, () => {
 	console.log("server is online");
 });
