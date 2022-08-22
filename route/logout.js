@@ -2,10 +2,10 @@ const Route = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { route } = require("./login");
 
-Route.get("/logout/", (req, res) => {
-	res.header("usertoken", "", { maxAge: 2 }).json("user loged out");
+Route.get("/logout", (req, res) => {
+	res.header("usertoken", "", { maxAge: 1}).json("user loged out");
 	// res.redirect("/login");
-	res.end();
+	// res.end();
 });
 
 module.exports = Route;
