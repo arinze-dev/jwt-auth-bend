@@ -30,7 +30,7 @@ app.use(cors());
 app.use("/api", registerRoute);
 app.use("/api", login);
 app.use("/api", logout);
-app.use(homeRoute);
+app.use("/api",homeRoute);
 
 app.listen(4040, () => {
 	console.log("server is online");

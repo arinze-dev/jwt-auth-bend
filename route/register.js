@@ -14,7 +14,7 @@ Route.post("/register/", async (req, res) => {
 	};
 
 	const { error} = validateRegister(RegisterData);
-
+       console.log(error);
 	// note this logs all the error because abortEarly is false in joi
 
 	if (error) return res.status(400).json(error.details)
@@ -23,25 +23,25 @@ Route.post("/register/", async (req, res) => {
 
 	//  checking to no if the name already exist
 	const nameCheck = await User.findOne({ name: RegisterData.name }); //
-	if (nameCheck) return res.status(400).json("Name already Exist ⚡");
+	if (nameCheck)return res.status(400).json("Name already Exist ⚡")  
 	//  checking to no if the email already exist
 
 	const emailCheck = await User.findOne({ email: RegisterData.email }); //
-	if (emailCheck) return res.status(400).json("Email already Exist ⚡");
-	//
+	if (emailCheck) return res.status(400).json( "Email already Exist ⚡")  
+	//  
 
 	//  bcrypt
 	const salt = await bcrypt.genSalt(10);
 	RegisterData.password = await bcrypt.hash(RegisterData.password, salt);
 
 	//
+	  const userMoudel = new User(RegisterData);
+	    const Newuser = await userMoudel.save();
+	  return res.status(200).json( {status:200, message:"success registration"});
 
-	const userMoudel = new User(RegisterData);
-		const Newuser = await userMoudel.save();
-		res.status(201).json( {status:200, message:"success registration"});
 	} catch (error) {
-		console.log(error);
-		res.status(400).json(error);
+		// console.log(error);
+	  return res.status(400).json(error);
 	}
 });
 
