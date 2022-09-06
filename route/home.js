@@ -9,7 +9,10 @@ Route.get("/home", authUser, (req, res) => {
 module.exports = Route;
 
 
-
+// Route.route("/")
+// .get(tours)
+// .post(tourUpdate);
+// Route.route("/:id").get()
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmVlMzY5NDAxYWMzMTVhMTQ3NzhhODciLCJpYXQiOjE2NTk3OTA1NTh9.nmOIlmtbLstMI-8PhWrB8Gsz8N3krwzDMeCzXkAwDZU
 
